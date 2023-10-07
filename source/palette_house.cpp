@@ -521,14 +521,19 @@ void EditHouseDialog::OnClickOK(wxCommandEvent& WXUNUSED(event))
 		long new_house_rent;
 		house_rent.ToLong(&new_house_rent);
 
-		long new_house_clientid;
-		house_clientid.ToLong(&new_house_clientid);
-
 		long new_house_beds;
 		house_beds.ToLong(&new_house_beds);
 
+		long new_house_clientid;
+		house_clientid.ToLong(&new_house_clientid);
+
 		if(new_house_rent < 0) {
 			g_gui.PopupDialog(this, "Error", "House rent cannot be less than 0.", wxOK);
+			return;
+		}
+
+		if(new_house_beds < 0) {
+			g_gui.PopupDialog(this, "Error", "House beds cannot be less than 0.", wxOK);
 			return;
 		}
 
