@@ -234,11 +234,14 @@ bool NpcDatabase::loadFromXML(const FileName &filename, bool standard, wxString 
 		NpcType* npcType = NpcType::loadFromXML(npcNode, warnings);
 		if (npcType) {
 			npcType->standard = standard;
-			if ((*this)[npcType->name]) {
+
+			std::string key = as_lower_str(npcType->name);
+
+			if (npcMap.find(key) != npcMap.end()) {
 				warnings.push_back("Duplicate npc with name \"" + wxstr(npcType->name) + "\"! Discarding...");
 				delete npcType;
 			} else {
-				npcMap[as_lower_str(npcType->name)] = npcType;
+				npcMap[key] = npcType;
 			}
 		}
 	}
