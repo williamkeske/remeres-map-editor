@@ -579,13 +579,13 @@ bool ItemDatabase::loadFromProtobuf(wxString &error, wxArrayString &warnings, ca
 			}
 		}
 
-		if (t) {
-			if (items[t->id]) {
-				wxLogWarning("appearances.dat: Duplicate items");
-				items[t->id].reset();
-			}
-			items.set(t->id, t);
-		}
+		// if (t) {
+			// if (items[t->id]) {
+				// wxLogWarning("appearances.dat: Duplicate items");
+				// items[t->id].reset();
+			// }
+			// items.set(t->id, t);
+		// }
 	}
 
 	spdlog::debug("[ItemDatabase::loadFromProtobuf] - Last loaded item: {}", maxItemId);
