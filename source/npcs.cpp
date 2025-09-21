@@ -67,7 +67,7 @@ NpcType* NpcType::loadFromXML(pugi::xml_node node, wxArrayString &warnings) {
 
 	NpcType* npcType = newd NpcType();
 	npcType->name = attribute.as_string();
-	npcType->outfit.name = npcType->name;
+	// npcType->outfit.name = npcType->name;
 
 	if ((attribute = node.attribute("looktype"))) {
 		npcType->outfit.lookType = attribute.as_int();
