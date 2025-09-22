@@ -122,7 +122,7 @@ MonsterType* MonsterType::loadFromOTXML(const FileName &filename, pugi::xml_docu
 
 	MonsterType* ct = newd MonsterType();
 	ct->name = attribute.as_string();
-	ct->outfit.name = ct->name;
+	// ct->outfit.name = ct->name;
 
 	for (pugi::xml_node optionNode = node.first_child(); optionNode; optionNode = optionNode.next_sibling()) {
 		if (as_lower_str(optionNode.name()) != "look") {
