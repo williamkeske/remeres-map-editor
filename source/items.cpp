@@ -581,7 +581,7 @@ bool ItemDatabase::loadFromProtobuf(wxString &error, wxArrayString &warnings, ca
 
 		if (t) {
 			if (items[t->id]) {
-				//wxLogWarning("appearances.dat: Duplicate items");
+				// wxLogWarning("appearances.dat: Duplicate items");
 				items[t->id].reset();
 			}
 			items.set(t->id, t);

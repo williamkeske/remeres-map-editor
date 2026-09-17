@@ -516,7 +516,7 @@ void EditHouseDialog::OnClickOK(wxCommandEvent &WXUNUSED(event)) {
 
 		long new_house_clientid;
 		house_clientid.ToLong(&new_house_clientid);
-		
+
 		long new_house_id;
 		if (!house_id.ToLong(&new_house_id)) {
 			g_gui.PopupDialog(this, "Error", "Invalid house ID.", wxOK);
@@ -556,7 +556,7 @@ void EditHouseDialog::OnClickOK(wxCommandEvent &WXUNUSED(event)) {
 				}
 			}
 		}
-		
+
 		uint32_t old_house_id = what_house->id;
 		uint32_t requested_house_id = static_cast<uint32_t>(new_house_id);
 
