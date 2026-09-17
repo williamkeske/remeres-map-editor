@@ -473,7 +473,6 @@ EditHouseDialog::EditHouseDialog(wxWindow* parent, Map* map, House* house) :
 	rent_field = newd wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(160, 20), 0, wxTextValidator(wxFILTER_NUMERIC, &house_rent));
 	tmpsizer->Add(rent_field);
 	id_field = newd wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(70, 20), 0, wxTextValidator(wxFILTER_NUMERIC, &house_id));
-	id_field->Enable(false);
 	tmpsizer->Add(id_field);
 	sizer->Add(tmpsizer, wxSizerFlags().Border(wxALL, 20));
 
@@ -517,6 +516,17 @@ void EditHouseDialog::OnClickOK(wxCommandEvent &WXUNUSED(event)) {
 
 		long new_house_clientid;
 		house_clientid.ToLong(&new_house_clientid);
+		
+		long new_house_id;
+		if (!house_id.ToLong(&new_house_id)) {
+			g_gui.PopupDialog(this, "Error", "Invalid house ID.", wxOK);
+			return;
+		}
+
+		if (new_house_id <= 0) {
+			g_gui.PopupDialog(this, "Error", "House ID must be greater than 0.", wxOK);
+			return;
+		}
 
 		if (new_house_rent < 0) {
 			g_gui.PopupDialog(this, "Error", "House rent cannot be less than 0.", wxOK);
@@ -544,6 +554,33 @@ void EditHouseDialog::OnClickOK(wxCommandEvent &WXUNUSED(event)) {
 						return;
 					}
 				}
+			}
+		}
+		
+		uint32_t old_house_id = what_house->id;
+		uint32_t requested_house_id = static_cast<uint32_t>(new_house_id);
+
+		if (requested_house_id != old_house_id) {
+			House* existing_house = map->houses.getHouse(requested_house_id);
+
+			if (existing_house) {
+				g_gui.PopupDialog(
+					this,
+					"Error",
+					"The requested house ID is already in use.",
+					wxOK
+				);
+				return;
+			}
+
+			if (!map->houses.changeHouseID(old_house_id, requested_house_id)) {
+				g_gui.PopupDialog(
+					this,
+					"Error",
+					"Could not change the house ID.",
+					wxOK
+				);
+				return;
 			}
 		}
 

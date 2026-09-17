@@ -97,6 +97,7 @@ public:
 
 	void removeHouse(House* house_to_remove);
 	void addHouse(House* new_house);
+	bool changeHouseID(uint32_t oldID, uint32_t newID);
 	House* getHouse(uint32_t houseid);
 	const House* getHouse(uint32_t houseid) const;
 	uint32_t getEmptyID();

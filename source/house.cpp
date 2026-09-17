@@ -60,6 +60,55 @@ void Houses::removeHouse(House* house_to_remove) {
 	delete house_to_remove;
 }
 
+bool Houses::changeHouseID(uint32_t oldID, uint32_t newID) {
+	if (oldID == newID) {
+		return true;
+	}
+
+	if (newID == 0) {
+		return false;
+	}
+
+	auto oldIt = houses.find(oldID);
+	if (oldIt == houses.end()) {
+		return false;
+	}
+
+	// Do not allow duplicate house IDs.
+	if (houses.find(newID) != houses.end()) {
+		return false;
+	}
+
+	House* house = oldIt->second;
+
+	// Remove only the old registry entry.
+	// Do not use removeHouse(), because it deletes the house.
+	houses.erase(oldIt);
+
+	// Change the actual house ID.
+	house->id = newID;
+
+	// Update all tiles belonging to this house.
+	for (const Position &position : house->tiles) {
+		Tile* tile = map.getTile(position);
+		if (tile) {
+			tile->setHouse(house);
+			tile->modify();
+		}
+	}
+
+	// Register the house using the new ID.
+	houses[newID] = house;
+
+	if (newID > max_house_id) {
+		max_house_id = newID;
+	}
+
+	map.doChange();
+
+	return true;
+}
+
 House* Houses::getHouse(uint32_t houseid) {
 	HouseMap::iterator it = houses.find(houseid);
 	if (it != houses.end()) {
