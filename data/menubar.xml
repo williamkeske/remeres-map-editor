@@ -13,10 +13,17 @@
             <item name="Import $Monsters..." action="IMPORT_MONSTERS" help="Import either a monsters.xml file or a specific monster."/>
             <item name="Import $NPC..." action="IMPORT_NPCS" help="Import either a npc.xml file or a specific NPC."/>
             <item name="Import Mi$nimap..." action="IMPORT_MINIMAP" help="Import map data from a .bmp file."/>
+            <item name="Import $Bitmap to Map..." action="IMPORT_BITMAP_TO_MAP" help="Import an image and convert colors to map tiles using brushes."/>
         </menu>
         <menu name="$Export">
             <item name="$Export Minimap..." action="EXPORT_MINIMAP" help="Export minimap to an image file."/>
             <item name="$Export Tilesets..." action="EXPORT_TILESETS" help="Export tilesets to an xml file."/>
+        </menu>
+        <menu name="$Client Assets">
+            <item name="Export $Static House Data..." action="EXPORT_STATIC_HOUSE_DATA" help="Export staticdata and staticmapdata protobuf assets."/>
+            <item name="Export $Cyclopedia Minimap/Satellite..." action="EXPORT_CYCLOPEDIA_MAP" help="Export cyclopedia mapdata, minimap, and satellite assets."/>
+            <separator/>
+            <item name="$Restore Client Assets Backup..." action="REVERT_CYCLOPEDIA_ASSETS" help="Restore a timestamped client assets backup snapshot."/>
         </menu>
         <menu name="$Reload">
             <item name="$Reload" hotkey="F5" action="RELOAD_DATA" help="Reloads all data files."/>
@@ -31,6 +38,7 @@
         <item name="$Redo" hotkey="Ctrl+Shift+Z" action="REDO" help="Redo last undid action."/>
         <separator/>
         <item name="Find $Item..." hotkey="Ctrl+F" action="FIND_ITEM" help="Find all instances of an item type the map."/>
+		<item name="Find $Monster..." action="FIND_MONSTER" help="Find all instances of a loaded monster on the map."/>
         <item name="R$eplace Items..." hotkey="Ctrl+Shift+F" action="REPLACE_ITEMS" help="Replaces all occurrences of one item with another."/>
         <menu name="$Find on Map">
             <item name="Find $Everything" action="SEARCH_ON_MAP_EVERYTHING" help="Find all unique/action/text/container items."/>
@@ -140,7 +148,7 @@
         <separator/>
         <item name="Show monsters" hotkey="F" action="SHOW_MONSTERS" help="Show monsters on the map."/>
         <item name="Show monsters spawns" hotkey="S" action="SHOW_SPAWNS_MONSTER" help="Show monsters spawns on the map."/>
-        <item name="Show npcs" hotkey="X" action="SHOW_NPCS" help="Show npcs on the map."/>
+        <item name="Show npcs" hotkey="Shift+N" action="SHOW_NPCS" help="Show npcs on the map."/>
         <item name="Show npcs spawns" hotkey="U" action="SHOW_SPAWNS_NPC" help="Show npcs spawns on the map."/>
         <item name="Sho$w special" hotkey="E" action="SHOW_SPECIAL" help="Show special tiles on the map, like PZ."/>
         <item name="Show as minimap" hotkey="Shift+E" action="SHOW_AS_MINIMAP" help="Show only the tile minimap colors."/>
@@ -160,6 +168,7 @@
     <menu name="$Window">
         <item name="$Minimap" hotkey="M" action="WIN_MINIMAP" help="Displays the minimap window."/>
         <item name="$Actions History" action="WIN_ACTIONS_HISTORY" help="Displays the actions history window."/>
+        <item name="SQLite Materials $Inspector" action="WIN_SQLITE_MATERIALS_INSPECTOR" help="Displays a read-only inspector for the SQLite materials database."/>
         <item name="$New Palette" action="NEW_PALETTE" help="Creates a new palette."/>
         <separator/>
         <item name="$Terrain Palette" hotkey="T" action="SELECT_TERRAIN" help="Select the Terrain palette."/>
@@ -201,6 +210,8 @@
         <item name="Floor 13" action="FLOOR_13" help=""/>
         <item name="Floor 14" action="FLOOR_14" help=""/>
         <item name="Floor 15" action="FLOOR_15" help=""/>
+    </menu>
+    <menu name="$Scripts">
     </menu>
     <menu name="$About">
         <item name="Goto $Website" hotkey="F3" action="GOTO_WEBSITE" help=""/>

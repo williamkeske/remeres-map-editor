@@ -18,6 +18,9 @@
 #ifndef RME_GUI_H_
 #define RME_GUI_H_
 
+#include <atomic>
+#include <thread>
+
 #include "graphics.h"
 #include "position.h"
 
@@ -61,6 +64,7 @@ class MapCanvas;
 class SearchResultWindow;
 class MinimapWindow;
 class ActionsHistoryWindow;
+class LuaScriptsWindow;
 class PaletteWindow;
 class OldPropertiesWindow;
 class TilesetWindow;
@@ -135,6 +139,9 @@ private:
 	GUI(const GUI &g_gui); // Don't copy me
 	GUI &operator=(const GUI &g_gui); // Don't assign me
 	bool operator==(const GUI &g_gui); // Don't compare me
+	void JoinAsyncSqliteBootstrapThread();
+	void RunAsyncSqliteBootstrapImport();
+	void HandleAsyncSqliteBootstrapResult(bool success, const wxString &sqliteImportError, const wxArrayString &sqliteWarnings);
 
 public:
 	template <typename T>
@@ -163,6 +170,7 @@ public:
 	 * The default scale is 0 - 100
 	 */
 	void CreateLoadBar(wxString message, bool canCancel = false);
+	void CreateLoadBar(wxString message, bool canCancel, bool appModal);
 
 	/**
 	 * Sets how much of the load has completed, the scale can be set with
@@ -220,6 +228,8 @@ public:
 	void RefreshActions();
 	void ShowToolbar(ToolBarID id, bool show);
 	void SetStatusText(wxString text);
+	bool IsAsyncSqliteBootstrapRunning() const;
+	void StartAsyncSqliteBootstrapImport();
 
 	long PopupDialog(wxWindow* parent, wxString title, wxString text, long style, wxString configsavename = wxEmptyString, uint32_t configsavevalue = 0);
 	long PopupDialog(wxString title, wxString text, long style, wxString configsavename = wxEmptyString, uint32_t configsavevalue = 0);
@@ -244,6 +254,8 @@ public:
 
 	ActionsHistoryWindow* ShowActionsWindow();
 	void HideActionsWindow();
+
+	LuaScriptsWindow* ShowScriptManagerWindow();
 
 	// Minimap
 	void CreateMinimap();
@@ -428,6 +440,7 @@ public:
 	DCButton* gem; // The small gem in the lower-right corner
 	SearchResultWindow* search_result_window;
 	ActionsHistoryWindow* actions_history_window;
+	LuaScriptsWindow* script_manager_window;
 	GraphicManager gfx;
 
 	BaseMap* secondary_map; // A buffer map
@@ -500,6 +513,8 @@ protected:
 
 	wxWindowDisabler* winDisabler;
 	int disabled_counter;
+	std::thread sqlite_bootstrap_thread_;
+	std::atomic<bool> sqlite_bootstrap_running_ = false;
 
 	friend class RenderingLock;
 	friend class IOMinimap;

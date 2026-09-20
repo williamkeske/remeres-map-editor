@@ -1,17 +1,23 @@
 {
-	"name": "remeres",
-	"version-string": "1.0.0",
-	"dependencies": [
-		"asio",
-		"pugixml",
-		"freeglut",
-		"nlohmann-json",
-		"fmt",
-		"wxwidgets",
-		"opengl",
-		"protobuf",
-		"liblzma",
-		"spdlog"
-	],
-	"builtin-baseline": "6760f636e7bcd0dd034c5c0906f6174009465c29"
+  "name": "remeres",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "asio",
+    "cpr",
+    "pugixml",
+    "glad",
+    "nlohmann-json",
+    "fmt",
+    "wxwidgets",
+    "opengl",
+    "protobuf",
+    "liblzma",
+    "spdlog",
+    "lua",
+    "sol2",
+    "sqlite3",
+    "stb",
+    "zlib"
+  ],
+  "builtin-baseline": "9e593bb18ea69cc5095e012465dcd675a822ed0d"
 }

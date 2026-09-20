@@ -538,6 +538,10 @@ ExportMiniMapWindow::ExportMiniMapWindow(wxWindow* parent, Editor &editor) :
 
 	// Format options
 	wxArrayString imageFormatChoices;
+	imageFormatChoices.Add("64x64");
+	imageFormatChoices.Add("128x128");
+	imageFormatChoices.Add("256x256");
+	imageFormatChoices.Add("512x512");
 	imageFormatChoices.Add("1024x1024");
 	imageFormatChoices.Add("2048x2048");
 	imageFormatChoices.Add("4096x4096");
@@ -627,11 +631,32 @@ void ExportMiniMapWindow::OnClickOK(wxCommandEvent &WXUNUSED(event)) {
 	g_gui.CreateLoadBar("Exporting minimap...");
 
 	const auto imageSizeSelection = imageSizeOptions->GetSelection();
-	auto imageSize = 1024;
-	if (imageSizeSelection == 1) {
-		imageSize = 2048;
-	} else if (imageSizeSelection == 2) {
-		imageSize = 4096;
+	int imageSize = 64;
+	switch (imageSizeSelection) {
+		case 0:
+			imageSize = 64;
+			break;
+		case 1:
+			imageSize = 128;
+			break;
+		case 2:
+			imageSize = 256;
+			break;
+		case 3:
+			imageSize = 512;
+			break;
+		case 4:
+			imageSize = 1024;
+			break;
+		case 5:
+			imageSize = 2048;
+			break;
+		case 6:
+			imageSize = 4096;
+			break;
+		default:
+			imageSize = 1024;
+			break;
 	}
 
 	auto format = static_cast<MinimapExportFormat>(format_options->GetSelection());
@@ -1215,8 +1240,12 @@ void FindDialogListBox::OnDrawItem(wxDC &dc, const wxRect &rect, size_t n) const
 				npcType = g_npcs[brushlist[n]->getName()];
 			}
 
-			auto lookType = monsterType ? monsterType->outfit.lookType : npcType ? npcType->outfit.lookType
-																				 : 0;
+			int lookType = 0;
+			if (monsterType) {
+				lookType = monsterType->outfit.lookType;
+			} else if (npcType) {
+				lookType = npcType->outfit.lookType;
+			}
 			auto creatureSprite = g_gui.gfx.getCreatureSprite(lookType);
 			if (creatureSprite) {
 				creatureSprite->DrawTo(&dc, SPRITE_SIZE_32x32, rect.GetX(), rect.GetY(), rect.GetWidth(), rect.GetHeight());

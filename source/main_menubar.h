@@ -35,6 +35,9 @@ namespace MenuBar {
 		IMPORT_NPCS,
 		IMPORT_MINIMAP,
 		EXPORT_MINIMAP,
+		EXPORT_STATIC_HOUSE_DATA,
+		EXPORT_CYCLOPEDIA_MAP,
+		REVERT_CYCLOPEDIA_ASSETS,
 		EXPORT_TILESETS,
 		RELOAD_DATA,
 		RECENT_FILES,
@@ -43,6 +46,7 @@ namespace MenuBar {
 		UNDO,
 		REDO,
 		FIND_ITEM,
+		FIND_MONSTER,
 		REPLACE_ITEMS,
 		SEARCH_ON_MAP_EVERYTHING,
 		SEARCH_ON_MAP_UNIQUE,
@@ -128,6 +132,7 @@ namespace MenuBar {
 		SHOW_AVOIDABLES,
 		WIN_MINIMAP,
 		WIN_ACTIONS_HISTORY,
+		WIN_SQLITE_MATERIALS_INSPECTOR,
 		NEW_PALETTE,
 		TAKE_SCREENSHOT,
 		LIVE_START,
@@ -167,6 +172,7 @@ namespace MenuBar {
 		REMOVE_ON_SELECTION_DUPLICATED_ITEMS,
 		SEARCH_ON_MAP_WALLS_UPON_WALLS,
 		SEARCH_ON_SELECTION_WALLS_UPON_WALLS,
+		IMPORT_BITMAP_TO_MAP,
 	};
 }
 
@@ -188,6 +194,7 @@ public:
 	void AddRecentFile(FileName file);
 	void LoadRecentFiles();
 	void SaveRecentFiles();
+	void LoadScriptsMenu();
 	std::vector<wxString> GetRecentFiles();
 
 	// Interface
@@ -213,7 +220,11 @@ public:
 	void OnImportMonsterData(wxCommandEvent &event);
 	void OnImportNpcData(wxCommandEvent &event);
 	void OnImportMinimap(wxCommandEvent &event);
+	void OnImportBitmapToMap(wxCommandEvent &event);
 	void OnExportMinimap(wxCommandEvent &event);
+	void OnExportStaticHouseData(wxCommandEvent &event);
+	void OnExportCyclopediaMapData(wxCommandEvent &event);
+	void OnRevertCyclopediaAssets(wxCommandEvent &event);
 	void OnExportTilesets(wxCommandEvent &event);
 	void OnReloadDataFiles(wxCommandEvent &event);
 
@@ -241,6 +252,7 @@ public:
 	void OnCopy(wxCommandEvent &event);
 	void OnPaste(wxCommandEvent &event);
 	void OnSearchForItem(wxCommandEvent &event);
+	void OnSearchForMonster(wxCommandEvent &event);
 	void OnReplaceItems(wxCommandEvent &event);
 	void OnSearchForStuffOnMap(wxCommandEvent &event);
 	void OnSearchForUniqueOnMap(wxCommandEvent &event);
@@ -287,6 +299,7 @@ public:
 	// Window Menu
 	void OnMinimapWindow(wxCommandEvent &event);
 	void OnActionsHistoryWindow(wxCommandEvent &event);
+	void OnSQLiteMaterialsInspector(wxCommandEvent &event);
 	void OnNewPalette(wxCommandEvent &event);
 	void OnTakeScreenshot(wxCommandEvent &event);
 	void OnSelectTerrainPalette(wxCommandEvent &event);
@@ -326,6 +339,7 @@ protected:
 protected:
 	MainFrame* frame;
 	wxMenuBar* menubar;
+	wxMenu* scriptsMenu = nullptr;
 
 	// Used so that calling Check on menu items don't trigger events (avoids infinite recursion)
 	bool checking_programmaticly;
